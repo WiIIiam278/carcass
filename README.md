@@ -43,3 +43,6 @@ and preconfigured data folders to copy over.
 | `-o`, `--output`                         | OUTPUT               | Output directory; where the servers will be made  | `-o ./servers/`                             |
 
 I recommend writing your own simple script that use carcass to spin up a network of servers and then use the `\.start_servers.ps1` script (of which you can pass an argument specifying the network directory to start) to start them.
+
+## License
+`carcass` is licensed under Apache-2.0.

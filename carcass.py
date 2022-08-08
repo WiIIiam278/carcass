@@ -327,7 +327,8 @@ def copy_plugins(plugins, plugin_folders, plugins_folder):
         if not os.path.exists(folder):
             print(f"Plugin data folder {folder} does not exist, skipping copy")
             continue
-        shutil.copy(folder, plugins_folder)
+        # Copy the contents of the folder to a subdirectory of the server/plugins folder
+        shutil.copytree(folder, plugins_folder + "/" + folder.split("/")[-1])
 
 
 # Execute the main function

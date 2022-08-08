@@ -90,22 +90,22 @@ def main():
                         default=[],
                         help="List of backend plugin jar file paths to copy",
                         required=False,
-                        nargs="+")
+                        nargs="*")
     parser.add_argument("-fp", "--proxy-plugins",
                         default=[],
                         help="List of proxy plugin jar file paths to copy",
                         required=False,
-                        nargs="+")
+                        nargs="*")
     parser.add_argument("-bpf", "--plugin-folders", "--backend-plugin-folders",
                         default=[],
                         help="List of backend plugin data folder file paths to copy",
                         required=False,
-                        nargs="+")
+                        nargs="*")
     parser.add_argument("-ppf", "--proxy-plugin-folders",
                         default=[],
                         help="List of proxy plugin data folder file paths to copy",
                         required=False,
-                        nargs="+")
+                        nargs="*")
     parser.add_argument("-o", "--output",
                         default='./servers/',
                         help="Directory to create the servers folder in",

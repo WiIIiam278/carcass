@@ -297,8 +297,20 @@ def copy_plugins(plugins, plugin_folders, plugins_folder):
     for plugin in plugins:
         # Skip if the plugin does not exist
         if not os.path.exists(plugin):
-            print(f"Plugin jar file {plugin} does not exist, skipping copy")
-            continue
+            # If the plugin name contains a *, find the plugin with the same name before the *
+            if "*" in plugin:
+                # Get the parent directory of the plugin, check if it exists
+                plugin_name = plugin.split("*")[0]
+                plugin_parent_directory = os.path.dirname(plugin)
+                if os.path.exists(plugin_parent_directory):
+                    for file in os.listdir(plugin_parent_directory):
+                        if file.startswith(plugin_name):
+                            shutil.copy(plugin_parent_directory + "/" + file, plugins_folder + "/" + plugin)
+                            continue
+            else:
+                print(f"Plugin jar file {plugin} does not exist, skipping copy")
+                continue
+
         shutil.copy(plugin, plugins_folder)
 
     # Copy each plugin data folder from the plugin list to the server/plugins folder

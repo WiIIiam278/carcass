@@ -9,4 +9,4 @@ Param(
     [string]$networkDirectory = "./servers/"
 )
 
-python ./carcass.py -e true -o $networkDirectory -ph $proxyHost -pp $proxyPort
+python ./carcass.py -e true -o $networkDirectory -ph $proxyHost -pp $proxyPort -bp $backendPlugins -bpf $backendPluginFolders -pp $proxyPlugins -ppf $proxyPluginFolders

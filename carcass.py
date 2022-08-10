@@ -30,6 +30,8 @@ class Parameters:
     proxy_plugins = []
     proxy_plugin_folders = []
 
+    just_update_plugins = False
+
 
 def main():
     # Prepare default parameters
@@ -40,6 +42,11 @@ def main():
     parser.add_argument("-e", "--eula",
                         default="false",
                         help="Whether you agree to the Minecraft EULA",
+                        required=False)
+    parser.add_argument("-u", "--update",
+                        default=False,
+                        help="Whether to just update plugins",
+                        type=bool,
                         required=False)
     parser.add_argument("-bt", "--type", "--backend-type",
                         default="paper",
@@ -138,8 +145,26 @@ def main():
     parameters.backend_plugin_folders = args.plugin_folders
     parameters.proxy_plugin_folders = args.proxy_plugin_folders
     parameters.operator_names = args.operator_names
-    parameters.operator_uuids  = args.operator_uuids
+    parameters.operator_uuids = args.operator_uuids
     parameters.root_dir = args.output
+    parameters.just_update_plugins = args.update
+
+    # Update plugins if necessary
+    if parameters.just_update_plugins:
+        for name in parameters.backend_names:
+            plugin_dir = f"{parameters.root_dir}{name}/plugins"
+
+            # Clear contents of the plugin_dir directory if it exists
+            if os.path.exists(plugin_dir):
+                shutil.rmtree(plugin_dir)
+
+            # Create the plugin_dir directory if it doesn't exist
+            if not os.path.exists(plugin_dir):
+                os.makedirs(plugin_dir)
+
+            # Copy plugins in
+            copy_plugins(parameters.backend_plugins, parameters.backend_plugin_folders, plugin_dir)
+        return
 
     # Require EULA agreement
     if parameters.eula_agreement.lower() != "true":

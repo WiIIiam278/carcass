@@ -119,7 +119,7 @@ def main():
                         default=[],
                         required=False,
                         nargs="*")
-    parser.add_argument("-opn", "--operator-uuids",
+    parser.add_argument("-opu", "--operator-uuids",
                         default=[],
                         required=False,
                         nargs="*")

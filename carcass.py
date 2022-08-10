@@ -19,6 +19,8 @@ class Parameters:
     backend_ram = 2048
     backend_plugins = []
     backend_plugin_folders = []
+    operator_names = []
+    operator_uuids = []
 
     proxy_name = "proxy"
     proxy_host = "0.0.0.0"
@@ -106,6 +108,14 @@ def main():
                         help="List of proxy plugin data folder file paths to copy",
                         required=False,
                         nargs="*")
+    parser.add_argument("-opn", "--operator-names",
+                        default=[],
+                        required=False,
+                        nargs="*")
+    parser.add_argument("-opn", "--operator-uuids",
+                        default=[],
+                        required=False,
+                        nargs="*")
     parser.add_argument("-o", "--output",
                         default='./servers/',
                         help="Directory to create the servers folder in",
@@ -127,6 +137,8 @@ def main():
     parameters.proxy_plugins = args.proxy_plugins
     parameters.backend_plugin_folders = args.plugin_folders
     parameters.proxy_plugin_folders = args.proxy_plugin_folders
+    parameters.operator_names = args.operator_names
+    parameters.operator_uuids  = args.operator_uuids
     parameters.root_dir = args.output
 
     # Require EULA agreement
@@ -192,6 +204,23 @@ def create_backend_server(name, port, parameters):
             file.write(f"enable-rcon=false\n")
             file.write(f"spawn-protection=0\n")
             file.write(f"online-mode=false\n")
+
+        # Create operators file if needed
+        if len(parameters.operator_names) > 0 and len(parameters.operator_uuids) > 0:
+            with open(server_dir + "/ops.json", "w") as file:
+                file.write("[\n")
+                operator_count = min(len(parameters.operator_names), len(parameters.operator_uuids));
+                for i in range(0, operator_count):
+                    file.write("  {\n")
+                    file.write(f"   \"uuid\": \"{parameters.operator_uuids[i]}\",\n")
+                    file.write(f"   \"name\": \"{parameters.operator_names[i]}\",\n")
+                    file.write("    \"level\": 4,\n")
+                    file.write("    \"bypassesPlayerLimit\": false\n")
+                    if i < operator_count - 1:
+                        file.write("},\n")
+                    else:
+                        file.write("}\n")
+                file.write("]")
 
         # Copy plugins
         copy_plugins(parameters.backend_plugins, parameters.backend_plugin_folders, f"{server_dir}/plugins")

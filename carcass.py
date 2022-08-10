@@ -242,9 +242,9 @@ def create_backend_server(name, port, parameters):
                     file.write("    \"level\": 4,\n")
                     file.write("    \"bypassesPlayerLimit\": false\n")
                     if i < operator_count - 1:
-                        file.write("},\n")
+                        file.write("  },\n")
                     else:
-                        file.write("}\n")
+                        file.write("  }\n")
                 file.write("]")
 
         # Copy plugins

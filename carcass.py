@@ -209,7 +209,7 @@ def create_backend_server(name, port, parameters):
         if len(parameters.operator_names) > 0 and len(parameters.operator_uuids) > 0:
             with open(server_dir + "/ops.json", "w") as file:
                 file.write("[\n")
-                operator_count = min(len(parameters.operator_names), len(parameters.operator_uuids));
+                operator_count = min(len(parameters.operator_names), len(parameters.operator_uuids))
                 for i in range(0, operator_count):
                     file.write("  {\n")
                     file.write(f"   \"uuid\": \"{parameters.operator_uuids[i]}\",\n")

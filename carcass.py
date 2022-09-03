@@ -67,7 +67,7 @@ def main():
                         required=False,
                         nargs="+")
     parser.add_argument("-v", "--version", "--minecraft-version",
-                        default="1.19.1",
+                        default="1.19.2",
                         help="Minecraft version to run (e.g. 1.19.2)",
                         required=False)
     parser.add_argument("-pv", "--proxy-version",
